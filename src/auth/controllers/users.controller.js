@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import { registerSchema } from '../dto-schema/register-dto.schema.js';
+import { loginSchema } from '../dto-schema/login-dto.schema.js';
 import { validatorMiddleware } from '../middlewares/validation.middleware.js';
 import * as UsersService from '../services/users.service.js';
 import bcrypt from 'bcrypt';
+import { Prisma } from '@prisma/client';
+import { jwt } from 'jsonwebtoken'; 
 
 export const usersController = new Router();
 
@@ -30,3 +33,33 @@ usersController.post(
     res.status(201).json({ user });
   }
 );
+
+usersController.post(
+  '/login', 
+  validatorMiddleware({ body: loginSchema }), 
+  async (req, res) => {
+    const { email, password } = req.body;
+    const user = await UsersService.getUser(email, password)
+      .catch((error) => { 
+        console.error('Error (users controller): ', error); 
+        if (error instanceof Prisma.NotFoundError) {
+          return res.status(404).json({ error: 'No user found' });
+        }
+        if (error.message === 'Wrong password') {
+          return res.status(error.statusCode).json({ error: error.message });
+        }
+        return res.status(500).json({ error: 'Couldn\'t retrieve data from database' });
+      });
+    const userData = { 
+      id: user.id,
+      email: user.email
+    }
+    const accessToken = jwt.sign(
+      userData,
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '20s'}
+    );
+    const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN_SECRET);
+    // TODO: save refresh token to database (in future to redis)
+    return res.status(200).json({ accessToken, refreshToken });
+})

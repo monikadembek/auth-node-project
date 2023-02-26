@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -14,4 +15,20 @@ export async function registerUser(email, password, name = '') {
       name: name,
     }
   });
+}
+
+export async function getUser(email, password) {
+  const user = await prisma.user.findFirstOrThrow({
+    where: {
+      email: email,
+    }
+  });
+  const match = await bcrypt.compare(password, user.password);
+  if (match) {
+    return user;
+  } else {
+    const error = new Error('Wrong password');
+    error.statusCode = 401;
+    throw error;
+  }
 }
