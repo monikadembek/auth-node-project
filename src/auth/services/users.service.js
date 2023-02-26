@@ -48,3 +48,11 @@ export async function removeRefreshToken(token) {
     }
   });
 }
+
+export async function getRefreshToken(token) {
+  return await prisma.refreshTokenStorage.findFirstOrThrow({
+    where: {
+      token: token
+    }
+  });
+}

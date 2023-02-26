@@ -85,3 +85,35 @@ usersController.delete('/logout', async (req, res) => {
     });
   return res.status(200).json({ 'message': 'Token removed' });
 });
+
+// get new access token by providing valid refresh token
+usersController.post('/token', async (req, res) => {
+  const refreshToken = req.body.token;
+  if (!refreshToken) {
+    return res.status(201).json({ 'message': 'No refresh token provided' });
+  }
+
+  // check if this refresh token exists in db, if the token is still valid
+  const tokenExists = await UsersService.getRefreshToken(refreshToken);
+  if (!tokenExists) {
+    return res.status(403).json({ message: 'Refresh token doesn\'t exist' });
+  }
+
+  // verify provided refresh token
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ 'message': 'invalid refresh token' });
+    }
+    // generate new access token
+    const userData = {
+      id: user.id,
+      email: user.email
+    }
+    const accessToken = jwt.sign(
+      userData,
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '20s'}
+    );
+    return res.status(200).json({ accessToken });
+  });
+});

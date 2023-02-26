@@ -20,10 +20,18 @@ Content-Type: application/json
     "password": "zaq1@WSX"
 }
 
-### DELETE logout 
+### DELETE logout - pass valid refresh token
 DELETE http://localhost:4000/users/logout
 Content-Type: application/json
 
 {
     "token": ""
+}
+
+### POST token - must pass valid refresh token to get new access token
+POST http://localhost:4000/users/token
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyY2M5M2VlLWNjNjUtNDE4Yy1hZjk4LWQzZDMwMjVhYWZkMiIsImVtYWlsIjoicnlzaWFAdGhlLWJlc3QtY2F0LWV2ZXIuY29tIiwiaWF0IjoxNjc3NDI4NzA5fQ.Ay9p2ExLq52hxqrujG4tFMIDVLDJDMuiLdGpLazVdpM"
 }
