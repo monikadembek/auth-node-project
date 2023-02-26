@@ -40,3 +40,11 @@ export async function saveRefreshToken(token) {
     }
   });
 }
+
+export async function removeRefreshToken(token) {
+  return await prisma.refreshTokenStorage.delete({ 
+    where: {
+      token: token
+    }
+  });
+}

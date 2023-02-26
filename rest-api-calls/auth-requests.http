@@ -19,3 +19,11 @@ Content-Type: application/json
     "email": "rysia@the-best-cat-ever.com",
     "password": "zaq1@WSX"
 }
+
+### DELETE logout 
+DELETE http://localhost:4000/users/logout
+Content-Type: application/json
+
+{
+    "token": ""
+}

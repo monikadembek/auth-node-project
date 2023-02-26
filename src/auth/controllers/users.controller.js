@@ -72,3 +72,16 @@ usersController.post(
     
     return res.status(200).json({ accessToken, refreshToken });
 });
+
+// remove refresh token to revoke access to protected routes
+// logout - remove refresh token from list of valid refresh tokens
+// so we no longer can generate access token with that refresh token
+usersController.delete('/logout', async (req, res) => {
+  const { token } = req.body;
+  await UsersService.removeRefreshToken(token)
+    .catch(error => {
+      console.log(error);
+      return res.status(500).json({ 'error': 'Removing token failed' });
+    });
+  return res.status(200).json({ 'message': 'Token removed' });
+});

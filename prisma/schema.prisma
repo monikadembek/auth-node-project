@@ -35,5 +35,5 @@ model Post {
 
 model RefreshTokenStorage {
   id Int @id @default(autoincrement())
-  token String
+  token String @unique
 }
