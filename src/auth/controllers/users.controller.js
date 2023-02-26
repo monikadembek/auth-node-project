@@ -9,6 +9,8 @@ import jwt from 'jsonwebtoken';
 
 export const usersController = new Router();
 
+const TOKEN_EXPIRATION_TIME = '15m';
+
 usersController.get('', async (req, res) => {
   let users = [];
   users = await UsersService.getUsers()
@@ -60,7 +62,7 @@ usersController.post(
     const accessToken = jwt.sign(
       userData,
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '20s'}
+      { expiresIn: TOKEN_EXPIRATION_TIME}
     );
     const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN_SECRET);
     
@@ -112,7 +114,7 @@ usersController.post('/token', async (req, res) => {
     const accessToken = jwt.sign(
       userData,
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '20s'}
+      { expiresIn: TOKEN_EXPIRATION_TIME}
     );
     return res.status(200).json({ accessToken });
   });

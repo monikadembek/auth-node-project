@@ -16,7 +16,7 @@ POST http://localhost:4000/users/login
 Content-Type: application/json
 
 {
-    "email": "rysia@the-best-cat-ever.com",
+    "email": "mina@gmail.com",
     "password": "zaq1@WSX"
 }
 
@@ -35,3 +35,8 @@ Content-Type: application/json
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyY2M5M2VlLWNjNjUtNDE4Yy1hZjk4LWQzZDMwMjVhYWZkMiIsImVtYWlsIjoicnlzaWFAdGhlLWJlc3QtY2F0LWV2ZXIuY29tIiwiaWF0IjoxNjc3NDI4NzA5fQ.Ay9p2ExLq52hxqrujG4tFMIDVLDJDMuiLdGpLazVdpM"
 }
+
+### GET post, works on different server than auth server
+### user must be logged in - pass valid access token in authorization header
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGZlZGQ3LWFmZjYtNDE0Mi04OGE3LTBjNGQwODE0NzdkMCIsImVtYWlsIjoibWluYUBnbWFpbC5jb20iLCJpYXQiOjE2Nzc0MzI3NTcsImV4cCI6MTY3NzQzMzY1N30.1DrKcUcc7hPbIcbcVAL6cY8pw2LWiafILxm8AAhfvnM
