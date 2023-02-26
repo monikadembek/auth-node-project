@@ -5,7 +5,7 @@ import { validatorMiddleware } from '../middlewares/validation.middleware.js';
 import * as UsersService from '../services/users.service.js';
 import bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
-import { jwt } from 'jsonwebtoken'; 
+import jwt from 'jsonwebtoken'; 
 
 export const usersController = new Router();
 
@@ -39,6 +39,7 @@ usersController.post(
   validatorMiddleware({ body: loginSchema }), 
   async (req, res) => {
     const { email, password } = req.body;
+
     const user = await UsersService.getUser(email, password)
       .catch((error) => { 
         console.error('Error (users controller): ', error); 
@@ -50,16 +51,24 @@ usersController.post(
         }
         return res.status(500).json({ error: 'Couldn\'t retrieve data from database' });
       });
+
     const userData = { 
       id: user.id,
       email: user.email
     }
+
     const accessToken = jwt.sign(
       userData,
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: '20s'}
     );
     const refreshToken = jwt.sign(userData, process.env.REFRESH_TOKEN_SECRET);
-    // TODO: save refresh token to database (in future to redis)
+    
+    // TODO: save refresh token to redis in future
+    await UsersService.saveRefreshToken(refreshToken)
+      .catch(error => {
+        console.log(error);
+      });
+    
     return res.status(200).json({ accessToken, refreshToken });
-})
+});

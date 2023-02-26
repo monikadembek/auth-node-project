@@ -32,3 +32,11 @@ export async function getUser(email, password) {
     throw error;
   }
 }
+
+export async function saveRefreshToken(token) {
+  return await prisma.refreshTokenStorage.create({
+    data: {
+      token: token
+    }
+  });
+}
