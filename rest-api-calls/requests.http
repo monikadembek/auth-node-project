@@ -1,0 +1,11 @@
+### Different server :3000 than the auth server
+### GET Home page
+GET http://localhost:3000
+
+### user must be logged in - pass valid access token in authorization header
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGZlZGQ3LWFmZjYtNDE0Mi04OGE3LTBjNGQwODE0NzdkMCIsImVtYWlsIjoibWluYUBnbWFpbC5jb20iLCJpYXQiOjE2Nzc5NDI1MDUsImV4cCI6MTY3Nzk0NjEwNX0.pxLOOrLVnv8N2IyXGS-GfiasLAS7awMAA1d3nVldhD0
+
+### Get Admin page
+GET http://localhost:3000/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGZlZGQ3LWFmZjYtNDE0Mi04OGE3LTBjNGQwODE0NzdkMCIsImVtYWlsIjoibWluYUBnbWFpbC5jb20iLCJpYXQiOjE2Nzc5NDI1MDUsImV4cCI6MTY3Nzk0NjEwNX0.pxLOOrLVnv8N2IyXGS-GfiasLAS7awMAA1d3nVldhD0

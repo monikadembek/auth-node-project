@@ -1,9 +1,10 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import { tokenAuthenticate } from './middleware/token-authentication.middleware.js';
-import { PrismaClient } from '@prisma/client';
+import { Router } from 'express';
+import { postsController } from './controllers/posts.controller.js';
 
-const prisma = new PrismaClient()
+const router = new Router();
 
 dotenv.config();
 const app = express();
@@ -11,15 +12,22 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/posts', tokenAuthenticate, async (req, res) => {
-  const userPosts = await prisma.post.findMany({
-    where: {
-      authorId: req.user.id
-    }
-  });
-  return res.status(200).json({ 'posts': userPosts });
+app.use(router);
+router.use('/posts', postsController);
+
+app.get('', (req, res) => {
+  res.send('Home Page');
+});
+
+app.get('/admin', tokenAuthenticate, (req, res) => {
+  res.send('Admin page');
 });
 
 app.listen(port, () => {
     console.log(`App is listening on port ${port}`);
+});
+
+process.on('uncaughtException', (err) => {
+  console.log('uncaught exception');
+  console.error(err);
 });
