@@ -1,8 +1,10 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { tokenAuthenticate } from './middleware/token-authentication.middleware.js';
 import { Router } from 'express';
 import { postsController } from './controllers/posts.controller.js';
+import { tokenAuthenticate } from './middleware/token-authentication.middleware.js';
+import { roleAuthentication } from './middleware/role-authentication.middleware.js';
+import { ROLE } from './role.js';
 
 const router = new Router();
 
@@ -19,7 +21,7 @@ app.get('', (req, res) => {
   res.send('Home Page');
 });
 
-app.get('/admin', tokenAuthenticate, (req, res) => {
+app.get('/admin', tokenAuthenticate, roleAuthentication(ROLE.ADMIN), (req, res) => {
   res.send('Admin page');
 });
 

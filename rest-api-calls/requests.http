@@ -2,10 +2,29 @@
 ### GET Home page
 GET http://localhost:3000
 
-### user must be logged in - pass valid access token in authorization header
-GET http://localhost:3000/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGZlZGQ3LWFmZjYtNDE0Mi04OGE3LTBjNGQwODE0NzdkMCIsImVtYWlsIjoibWluYUBnbWFpbC5jb20iLCJpYXQiOjE2Nzc5NDI1MDUsImV4cCI6MTY3Nzk0NjEwNX0.pxLOOrLVnv8N2IyXGS-GfiasLAS7awMAA1d3nVldhD0
-
 ### Get Admin page
 GET http://localhost:3000/admin
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGZlZGQ3LWFmZjYtNDE0Mi04OGE3LTBjNGQwODE0NzdkMCIsImVtYWlsIjoibWluYUBnbWFpbC5jb20iLCJpYXQiOjE2Nzc5NDI1MDUsImV4cCI6MTY3Nzk0NjEwNX0.pxLOOrLVnv8N2IyXGS-GfiasLAS7awMAA1d3nVldhD0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1YzFmYjcwLWI0ZDAtNGFmZC1iZjYyLTY4Nzc2OGQwMGQwMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjc3OTQ2MTkwLCJleHAiOjE2Nzc5NDk3OTB9.zzWxUoddE7VXf22YhMFaOXtMr53pAMHj4_IydwcogsI
+
+### GET all post written by signed in user
+### user must be logged in - pass valid access token in authorization header to get user posts
+GET http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1YzFmYjcwLWI0ZDAtNGFmZC1iZjYyLTY4Nzc2OGQwMGQwMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjc3OTQ2MTkwLCJleHAiOjE2Nzc5NDk3OTB9.zzWxUoddE7VXf22YhMFaOXtMr53pAMHj4_IydwcogsI
+
+### GET - /posts/:id
+GET http://localhost:3000/posts/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU1YzFmYjcwLWI0ZDAtNGFmZC1iZjYyLTY4Nzc2OGQwMGQwMyIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjc3OTQ2MTkwLCJleHAiOjE2Nzc5NDk3OTB9.zzWxUoddE7VXf22YhMFaOXtMr53pAMHj4_IydwcogsI
+
+### Creatr post
+POST http://localhost:3000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGZlZGQ3LWFmZjYtNDE0Mi04OGE3LTBjNGQwODE0NzdkMCIsImVtYWlsIjoibWluYUBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY3ODIyMTEzOSwiZXhwIjoxNjc4MjI0NzM5fQ.C8vOMdGH74tn4iiRqXsN_CdmuC5IeIpmiEMMsl5EbYQ
+Content-Type: application/json
+
+{
+    "title": "Another post title",
+    "content": "Some content added"
+}
+
+### DELETE post
+DELETE http://localhost:3000/posts/10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGZlZGQ3LWFmZjYtNDE0Mi04OGE3LTBjNGQwODE0NzdkMCIsImVtYWlsIjoibWluYUBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY3ODIyMTEzOSwiZXhwIjoxNjc4MjI0NzM5fQ.C8vOMdGH74tn4iiRqXsN_CdmuC5IeIpmiEMMsl5EbYQ

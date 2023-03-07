@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 
 export const usersController = new Router();
 
-const TOKEN_EXPIRATION_TIME = '15m';
+const TOKEN_EXPIRATION_TIME = '1h'; // '15m';
 
 usersController.get('', async (req, res) => {
   let users = [];
@@ -56,7 +56,8 @@ usersController.post(
 
     const userData = { 
       id: user.id,
-      email: user.email
+      email: user.email,
+      role: user.role
     }
 
     const accessToken = jwt.sign(
